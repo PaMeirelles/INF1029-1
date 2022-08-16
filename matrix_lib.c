@@ -21,6 +21,7 @@ void print_matrix(s_matrix * matrix){
       printf("\n");
     }
   }
+  printf("\n");
 }
 
 s_matrix * create_matrix(int width, int height, float * rows){
@@ -39,14 +40,24 @@ int get_cell(int width, int x, int y){
   return width * y + x;
 }
 void preenche_com_zero(s_matrix * matrix){
-  for(int i=0; i < matrix.width * matrix.height; i++){
-    matrix.rows[i] = 0;
+  for(int i=0; i < matrix->width * matrix->height; i++){
+    matrix->rows[i] = 0;
   }
 }
-/*
+
 int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c){
-  for(int i = 0; i < matrix_a.width; i++){
-    
+  if(!matrix_a || !matrix_b || !matrix_c){
+    return 0;
   }
+  int temp;
+  preenche_com_zero(matrix_c);
+  for(int i=0; i < matrix_a->height; i++){
+    for(int j=0; j < matrix_b->width; j++){
+      for(int k=0; k < matrix_a->width; k++){
+        temp = matrix_a->rows[get_cell(matrix_a->width, k, i)] * matrix_b->rows[get_cell(matrix_b->width,j ,k)];
+        matrix_c->rows[get_cell(matrix_c->width, j, i)] += temp;
+      }
+    }
+  }
+  return 1;
 }
-*/
