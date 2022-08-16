@@ -34,3 +34,7 @@ s_matrix * create_matrix(int width, int height, float * rows){
   }
   return matrix;
 }
+
+int get_cell(int width, int x, int y){
+  return width * y + x;
+}
