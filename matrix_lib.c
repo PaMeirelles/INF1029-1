@@ -38,3 +38,15 @@ s_matrix * create_matrix(int width, int height, float * rows){
 int get_cell(int width, int x, int y){
   return width * y + x;
 }
+void preenche_com_zero(s_matrix * matrix){
+  for(int i=0; i < matrix.width * matrix.height; i++){
+    matrix.rows[i] = 0;
+  }
+}
+/*
+int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c){
+  for(int i = 0; i < matrix_a.width; i++){
+    
+  }
+}
+*/
