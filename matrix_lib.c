@@ -50,7 +50,6 @@ int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct
     return 0;
   }
   int temp;
-  preenche_com_zero(matrix_c);
   for(int i=0; i < matrix_a->height; i++){
     for(int j=0; j < matrix_b->width; j++){
       for(int k=0; k < matrix_a->width; k++){
