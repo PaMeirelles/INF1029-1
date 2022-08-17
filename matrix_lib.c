@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <time.h>
+
 int scalar_matrix_mult(float scalar_value, struct matrix *matrix){
   if(matrix == NULL){
     return 1;
@@ -61,16 +63,27 @@ int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct
   return 1;
 }
 
-void read_matrix(s_matrix * matrix, char * name){
+void write_matrix(s_matrix * matrix, char * name){
   char * n = ("%s.dat", name);
   FILE * f = fopen(n , "w" );
   fwrite(matrix, sizeof(s_matrix), 1, f);
 }
 
 s_matrix * read_matrix(char * name){
-  FILE * f = fopen(name "r");
+  FILE * f = fopen(name, "r");
   s_matrix * matrix;
   fread(matrix, sizeof(s_matrix), 1, f);
   return matrix;
 
+}
+
+s_matrix * gen_random_matrix(int width, int height){
+  int size = width * height;
+  float rows[size];
+  for(int i=0; i < size; i++){
+    rows[i] = rand() % 10;
+  }
+  s_matrix * matrix = create_matrix(width, height, rows);
+
+  return matrix;
 }
