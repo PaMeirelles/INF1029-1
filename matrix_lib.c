@@ -61,14 +61,14 @@ int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct
   return 1;
 }
 
-void escreve_matriz(s_matrix * matrix, char * nome){
-  char * n = ("%s.dat", nome);
+void read_matrix(s_matrix * matrix, char * name){
+  char * n = ("%s.dat", name);
   FILE * f = fopen(n , "w" );
   fwrite(matrix, sizeof(s_matrix), 1, f);
 }
 
-s_matrix * read_matrix(char * nome){
-  FILE * f = fopen(nome "r");
+s_matrix * read_matrix(char * name){
+  FILE * f = fopen(name "r");
   s_matrix * matrix;
   fread(matrix, sizeof(s_matrix), 1, f);
   return matrix;
