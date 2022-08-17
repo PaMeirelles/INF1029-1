@@ -18,5 +18,7 @@ int main(){
   print_matrix(a);
   print_matrix(b);
   print_matrix(c);
+
+  escreve_matriz(a, "matriz_a");
   return 0;
 }
