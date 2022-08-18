@@ -16,14 +16,18 @@ int scalar_matrix_mult(float scalar_value, struct matrix *matrix){
 }
 
 void print_matrix(s_matrix * matrix){
+
   int size = matrix->width * matrix->height;
+  printf("%d", size);
   for(int i=0; i < size; i++){
     printf("%.2f ", matrix->rows[i]);
     if((i-1) % matrix->height == 0){
       printf("\n");
     }
-  }
+    }
+
   printf("\n");
+
 }
 
 s_matrix * create_matrix(int width, int height, float * rows){
@@ -64,17 +68,19 @@ int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct
 }
 
 void write_matrix(s_matrix * matrix, char * name){
-  char * n = ("%s.dat", name);
-  FILE * f = fopen(n , "w" );
+  FILE * f = fopen(name , "w" );
   fwrite(matrix, sizeof(s_matrix), 1, f);
+  fclose(f);
 }
 
-s_matrix * read_matrix(char * name){
+void read_matrix(char * name, s_matrix * matrix){
   FILE * f = fopen(name, "r");
-  s_matrix * matrix;
-  fread(matrix, sizeof(s_matrix), 1, f);
-  return matrix;
-
+  if(!f){
+    printf("File Not Found\n");
+    exit(1);
+  }
+  int i = fread(matrix, sizeof(s_matrix), 1, f);
+  fclose(f);
 }
 
 s_matrix * gen_random_matrix(int width, int height){
