@@ -71,10 +71,21 @@ int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct
 }
 
 void write_matrix(s_matrix * matrix, char * name){
-
+  int size = matrix-> width * matrix->height;
+  FILE * f = fopen(name, "w");
+  fwrite(matrix->rows, sizeof(float), size, f);
+  fclose(f);
 }
 
 void read_matrix(s_matrix * matrix, char * name){
+  int size = matrix-> width * matrix->height;
+  FILE * f = fopen(name, "r");
+  int s = fread(matrix->rows, sizeof(float), size, f);
+  if(s != size){
+    printf("Falha na leitura. Apenas %d elementos lidos\n", s);
+    exit(1);
+  }
+  fclose(f);
 
 }
 

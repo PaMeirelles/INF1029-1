@@ -7,14 +7,8 @@ int main(int argc, char * argv[]){
   time_t t;
   srand((unsigned) time(&t));
   
-  s_matrix * matrix_a = gen_random_matrix(2, 2);
-  print_matrix(matrix_a);
-  write_matrix(matrix_a, "matrix_b.dat");
-  free_matrix(matrix_a);
-
-  read_matrix(matrix_a, "matrix_a.dat");
-  free_matrix(matrix_a);
-  //print_matrix(matrix_a);
-  printf("%d", matrix_a->width);
+  s_matrix * matrix = gen_random_matrix(2, 2);
+  read_matrix(matrix, "matrix_b.dat");
+  print_matrix(matrix);
   return 0;
 }
