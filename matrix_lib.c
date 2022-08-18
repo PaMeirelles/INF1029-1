@@ -41,9 +41,9 @@ s_matrix * create_matrix(int width, int height, float * rows){
 int get_cell(int width, int x, int y){
   return width * y + x;
 }
-void preenche_com_zero(s_matrix * matrix){
+void fill_matrix(s_matrix * matrix, int num){
   for(int i=0; i < matrix->width * matrix->height; i++){
-    matrix->rows[i] = 0;
+    matrix->rows[i] = num;
   }
 }
 
@@ -87,3 +87,4 @@ s_matrix * gen_random_matrix(int width, int height){
 
   return matrix;
 }
+
