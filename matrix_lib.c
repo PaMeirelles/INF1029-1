@@ -18,7 +18,6 @@ int scalar_matrix_mult(float scalar_value, struct matrix *matrix){
 void print_matrix(s_matrix * matrix){
 
   int size = matrix->width * matrix->height;
-  printf("%d", size);
   for(int i=0; i < size; i++){
     printf("%.2f ", matrix->rows[i]);
     if((i-1) % matrix->height == 0){
@@ -42,6 +41,10 @@ s_matrix * create_matrix(int width, int height, float * rows){
   return matrix;
 }
 
+void free_matrix(s_matrix * matrix){
+  free(matrix->rows);
+  free(matrix);
+}
 int get_cell(int width, int x, int y){
   return width * y + x;
 }
@@ -68,19 +71,11 @@ int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct
 }
 
 void write_matrix(s_matrix * matrix, char * name){
-  FILE * f = fopen(name , "w" );
-  fwrite(matrix, sizeof(s_matrix), 1, f);
-  fclose(f);
+
 }
 
-void read_matrix(char * name, s_matrix * matrix){
-  FILE * f = fopen(name, "r");
-  if(!f){
-    printf("File Not Found\n");
-    exit(1);
-  }
-  int i = fread(matrix, sizeof(s_matrix), 1, f);
-  fclose(f);
+void read_matrix(s_matrix * matrix, char * name){
+
 }
 
 s_matrix * gen_random_matrix(int width, int height){
