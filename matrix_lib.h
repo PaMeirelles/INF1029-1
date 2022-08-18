@@ -10,5 +10,6 @@ int get_cell(int width, int x, int y);
 void fill_matrix(s_matrix * matrix, int num);
 int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c);
 void write_matrix(s_matrix * matrix, char * name);
-void read_matrix(char * name, s_matrix * matrix);
+void read_matrix(s_matrix * matrix, char * name);
 s_matrix * gen_random_matrix(int width, int height);
+void free_matrix(s_matrix * matrix);
