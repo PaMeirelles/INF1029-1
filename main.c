@@ -5,7 +5,7 @@
 #include <time.h>
 
 
-void setup(int width_a, int height_a, int width_b, int height_b){
+void setup(int width_a, int height_a, int width_b, int height_b, int print){
   FILE * ma = fopen("matrix_a.dat", "w");
   FILE * mb = fopen("matrix_b.dat", "w");
   
@@ -14,8 +14,10 @@ void setup(int width_a, int height_a, int width_b, int height_b){
   s_matrix * b = malloc(sizeof(s_matrix)); 
   b = gen_random_matrix(width_b, height_b);
 
-  print_matrix(a);
-  print_matrix(b);
+  if(print){
+    print_matrix(a);
+    print_matrix(b);
+  }
 
   write_matrix(a, ma);
   write_matrix(b, mb);
@@ -24,7 +26,7 @@ void setup(int width_a, int height_a, int width_b, int height_b){
   fclose(mb);
 }
 
-void check_files(int width_a, int height_a, int width_b, int height_b){
+void check_files(int width_a, int height_a, int width_b, int height_b, int print){
   FILE * ma = fopen("matrix_a.dat", "r");
   FILE * mb = fopen("matrix_b.dat", "r");
   FILE * mpr = fopen("pre_result.dat", "r");
@@ -46,20 +48,23 @@ void check_files(int width_a, int height_a, int width_b, int height_b){
   read_matrix(pre_result, mpr);
   read_matrix(result, mr);
 
+  if(print){
   print_matrix(a);
   print_matrix(b);
   print_matrix(pre_result);
   print_matrix(result);
+  }
 
   fclose(ma);
   fclose(mb);
   fclose(mpr);
   fclose(mr);
 }
-int main(int argc, char * argv[]){
 
+int main(int argc, char * argv[]){
+  //setup(800, 800, 800, 800);
   test(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9]);
-  check_files(8, 8, 8, 8);
+  check_files(800, 800, 800, 800, 0);
 
   return 0;
 }
