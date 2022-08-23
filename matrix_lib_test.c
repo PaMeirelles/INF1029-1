@@ -30,7 +30,7 @@ void test(char * string_scalar, char * string_width_a, char * string_height_a, c
   matrix_a->rows = malloc(sizeof(float) * width_a * height_a);
   matrix_b->rows = malloc(sizeof(float) * width_b * height_b);
   matrix_c->rows = malloc(sizeof(float) * width_a * height_b);
-  
+
   read_matrix(matrix_a, a1);
   read_matrix(matrix_b, a2);
 
