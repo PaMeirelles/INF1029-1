@@ -1,5 +1,4 @@
 #include "matrix_lib.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
 #include <time.h>
@@ -20,7 +19,7 @@ void print_matrix(s_matrix * matrix){
   int size = matrix->width * matrix->height;
   for(int i=0; i < size; i++){
     printf("%.2f ", matrix->rows[i]);
-    if((i-1) % matrix->height == 0){
+    if((i+1) % matrix->width == 0){
       printf("\n");
     }
     }
@@ -70,26 +69,20 @@ int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct
   return 1;
 }
 
-void write_matrix(s_matrix * matrix, char * name){
+void write_matrix(s_matrix * matrix, FILE * f){
   int size = matrix-> width * matrix->height;
-  FILE * f = fopen(name, "w");
   fwrite(matrix->rows, sizeof(float), size, f);
-  fclose(f);
 }
 
-void read_matrix(s_matrix * matrix, char * name){
+void read_matrix(s_matrix * matrix, FILE * f){
   
   int size = matrix-> width * matrix->height;
-  FILE * f = fopen(name, "r");
-    /*
-  int s = fread(matrix->rows, sizeof(float), size, f);
+  
+   int s = fread(matrix->rows, sizeof(float), size, f);
 
   if(s != size){
-    printf("Falha na leitura. Apenas %d elementos lidos\n", s);
-    exit(1);
-  }
-  fclose(f);
-  */
+     printf("Falha na leitura. Apenas %d elementos lidos, %d esperados\n", s, size);
+   }
 }
 
 s_matrix * gen_random_matrix(int width, int height){
