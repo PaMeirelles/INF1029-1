@@ -53,7 +53,7 @@ void fill_matrix(s_matrix * matrix, int num){
   }
 }
 
-int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c){
+int old_matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c){
   if(!matrix_a || !matrix_b || !matrix_c){
     return 0;
   }
@@ -68,6 +68,17 @@ int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct
   }
   return 1;
 }
+
+int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c){
+  int cell_a, cell_b, cell_c;
+  for(int i=0; i<matrix_a->height * matrix_b->height * matrix_b->width; i++){
+    cell_a = i / matrix_b->width;
+    cell_b = i % (matrix_a->height * matrix_b->height);
+    cell_c = (i / (matrix_b->height * matrix_b->width)) * matrix_c->width + i % matrix_c->width;
+    matrix_c->rows[cell_c] += matrix_a->rows[cell_a] * matrix_b->rows[cell_b];
+}
+  return 1;
+  }
 
 void write_matrix(s_matrix * matrix, FILE * f){
   int size = matrix-> width * matrix->height;
