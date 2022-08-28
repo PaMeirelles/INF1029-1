@@ -14,3 +14,5 @@ void write_matrix(s_matrix * matrix, FILE * f);
 void read_matrix(s_matrix * matrix, FILE * f);
 s_matrix * gen_random_matrix(int width, int height);
 void free_matrix(s_matrix * matrix);
+int trash_matrix_matrix_mult(struct matrix* matrixA, struct matrix* matrixB, struct matrix* matrixC);
+int classic_matrix_matrix_mult(struct matrix* matrixA, struct matrix* matrixB, struct matrix* matrixC);
