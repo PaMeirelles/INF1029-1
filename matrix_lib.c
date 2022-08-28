@@ -140,26 +140,69 @@ s_matrix * gen_random_matrix(int width, int height){
 }
 
 int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c){
-
   int counter = 0;
   float * pointer_a = matrix_a->rows;
-  float *pointer_b = matrix_b->rows;
-  float *pointer_c = matrix_c->rows;
-  
-  while(*pointer_a){
-    counter++;
-    
-    *pointer_c += *pointer_a + *pointer_b;
-    pointer_b++;
-    if(counter % (matrix_b->width * matrix_b->height)){
-      pointer_b = matrix_b->rows;
-    }
-    pointer_c++;
-    if(counter % matrix_b->width == 0){
-      pointer_a++;
-      pointer_c = matrix_c->rows;
+  float * pointer_b = matrix_b->rows;
+  float * pointer_c = matrix_c->rows;
+  int wb = matrix_b->width;
+  int hb = matrix_b->height;
+  int ha = matrix_a->height;
+  int size = hb * wb;
 
-    }
+ while(counter < ha * wb * hb){
+  //rintf("%.0f %.0f %.0f %d   ", *pointer_a, *pointer_b, *pointer_c, counter);
+  counter++;
+
+  *pointer_c += *pointer_a * *pointer_b;
+  //printf("%.0f %.0f %.0f %d\n", *pointer_a, *pointer_b, *pointer_c, counter);
+
+  pointer_c++;
+  pointer_b++;
+  if(counter % wb == 0){
+    pointer_a++;
+    pointer_c -= wb;
   }
-  return 1;
+  if (counter % size == 0){
+    pointer_b -= size;
+    pointer_c += wb;
+
+  }
+ }
+    return 1;
+}
+int bernardo_matrix_matrix_mult(struct matrix* matrixA, struct matrix* matrixB, struct matrix* matrixC) {
+    if ((matrixA == NULL) || (matrixB == NULL) || (matrixC == NULL)) {
+        printf("one of the matrix struct given is NULL pointer");
+        return 0;
+    }
+    int i, j, k, limit = matrixA->height * matrixB->width;
+
+    for (i = 0; i < matrixA->height; i++) {
+        for (j = 0; j < matrixB->width; j++) {
+            float sum = 0;
+            for (k = 0; k < matrixA->width; k++) {
+                sum += matrixA->rows[i * matrixA->width + k] * matrixB->rows[k * matrixB->width + j];
+            }
+            matrixC->rows[i * matrixC->width + j] = sum;
+        }
+    }
+    return 1;
+}
+
+// renato_main_opt
+int renato_matrix_matrix_mult(struct matrix* matrixA, struct matrix* matrixB, struct matrix* matrixC) {
+    if ((matrixA == NULL) || (matrixB == NULL) || (matrixC == NULL)) {
+        printf("one of the matrix struct given is NULL pointer");
+        return 0;
+    }
+    int i, j = 0, h = matrixA->height, limit = matrixA->height * matrixA->width;
+
+    for (i = 0; i < limit; i++) {
+
+        for (j = 0; j < limit; j++) {
+            matrixC->rows[j] += matrixA->rows[i] * matrixB->rows[j];
+            (j + 1) % h ? i : i++;
+        }
+    }
+    return 1;
 }

@@ -62,9 +62,8 @@ void check_files(int width_a, int height_a, int width_b, int height_b, int print
 }
 
 int main(int argc, char * argv[]){
-  //setup(3, 3, 3, 3, 1);
+ //setup(1024, 1024, 1024, 1024, 0);
  test(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9]);
- check_files(3, 3, 3, 3, 1);
-
+ check_files(1024, 1024, 1024, 1024, 0);
   return 0;
 }
