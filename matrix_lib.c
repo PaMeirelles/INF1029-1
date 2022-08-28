@@ -52,7 +52,24 @@ void fill_matrix(s_matrix * matrix, int num){
     matrix->rows[i] = num;
   }
 }
+int classic_matrix_matrix_mult(struct matrix* matrixA, struct matrix* matrixB, struct matrix* matrixC) {
+    if ((matrixA == NULL) || (matrixB == NULL) || (matrixC == NULL)) {
+        printf("one of the matrix struct given is NULL pointer");
+        return 0;
+    }
+    int i, j, k, limit = matrixA->height * matrixB->width;
 
+    for (i = 0; i < matrixA->height; i++) {
+        for (j = 0; j < matrixB->width; j++) {
+            float sum = 0;
+            for (k = 0; k < matrixA->width; k++) {
+                sum += matrixA->rows[i * matrixA->width + k] * matrixB->rows[k * matrixB->width + j];
+            }
+            matrixC->rows[i * matrixC->width + j] = sum;
+        }
+    }
+    return 1;
+}
 int old_matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c){
   if(!matrix_a || !matrix_b || !matrix_c){
     return 0;
@@ -69,7 +86,7 @@ int old_matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, st
   return 1;
 }
 
-int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c){
+int flawed_matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c){
   int cell_a, cell_b, cell_c;
   for(int i=0; i<matrix_a->height * matrix_b->height * matrix_b->width; i++){
     cell_a = i / matrix_b->width;
@@ -79,6 +96,21 @@ int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct
 }
   return 1;
   }
+
+int trash_matrix_matrix_mult(struct matrix* matrixA, struct matrix* matrixB, struct matrix* matrixC) {
+    if ((matrixA == NULL) || (matrixB == NULL) || (matrixC == NULL)) {
+        printf("one of the matrix struct given is NULL pointer");
+        return 0;
+    }
+    int i = 0, j, limit = matrixA->height * matrixA->width;
+    while (i < limit) {
+        for (j = 0; j < limit; j++) {
+            matrixC->rows[j] += matrixA->rows[i] * matrixB->rows[j];
+            if ((j + 1) % matrixA->height == 0) i++;
+        }
+    }
+    return 1;
+} 
 
 void write_matrix(s_matrix * matrix, FILE * f){
   int size = matrix-> width * matrix->height;
@@ -107,3 +139,27 @@ s_matrix * gen_random_matrix(int width, int height){
   return matrix;
 }
 
+int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c){
+
+  int counter = 0;
+  float * pointer_a = matrix_a->rows;
+  float *pointer_b = matrix_b->rows;
+  float *pointer_c = matrix_c->rows;
+  
+  while(*pointer_a){
+    counter++;
+    
+    *pointer_c += *pointer_a + *pointer_b;
+    pointer_b++;
+    if(counter % (matrix_b->width * matrix_b->height)){
+      pointer_b = matrix_b->rows;
+    }
+    pointer_c++;
+    if(counter % matrix_b->width == 0){
+      pointer_a++;
+      pointer_c = matrix_c->rows;
+
+    }
+  }
+  return 1;
+}
