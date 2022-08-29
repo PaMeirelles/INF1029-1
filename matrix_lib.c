@@ -150,11 +150,9 @@ int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct
   int size = hb * wb;
 
  while(counter < ha * wb * hb){
-  //rintf("%.0f %.0f %.0f %d   ", *pointer_a, *pointer_b, *pointer_c, counter);
   counter++;
 
   *pointer_c += *pointer_a * *pointer_b;
-  //printf("%.0f %.0f %.0f %d\n", *pointer_a, *pointer_b, *pointer_c, counter);
 
   pointer_c++;
   pointer_b++;

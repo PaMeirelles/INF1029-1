@@ -47,7 +47,7 @@ void test(char * string_scalar, char * string_width_a, char * string_height_a, c
   write_matrix(matrix_a, a3);
 
   gettimeofday(&start, NULL);
-  matrix_matrix_mult(matrix_a, matrix_b, matrix_c);
+  old_matrix_matrix_mult(matrix_a, matrix_b, matrix_c);
   gettimeofday(&stop, NULL);
   printf("Time for matrix mult: %.2fms\n", timedifference_msec(start, stop));
 
