@@ -134,7 +134,7 @@ void read_matrix(s_matrix * matrix, FILE * f){
 
 s_matrix * gen_random_matrix(int width, int height){
   int size = width * height;
-  float rows[size];
+  float * rows = malloc(sizeof(float) * size);
   for(int i=0; i < size; i++){
     rows[i] = rand() % 10;
   }
@@ -144,14 +144,14 @@ s_matrix * gen_random_matrix(int width, int height){
 }
 
 int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c){
-  int counter = 0;
+  long counter = 0;
   float * pointer_a = matrix_a->rows;
   float * pointer_b = matrix_b->rows;
   float * pointer_c = matrix_c->rows;
-  int wb = matrix_b->width;
-  int hb = matrix_b->height;
-  int ha = matrix_a->height;
-  int size = hb * wb;
+  long wb = matrix_b->width;
+  long hb = matrix_b->height;
+  long ha = matrix_a->height;
+  long size = hb * wb;
 
  while(counter < ha * wb * hb){
   counter++;

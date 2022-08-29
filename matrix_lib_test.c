@@ -1,7 +1,7 @@
 #include "matrix_lib.h"
+#include "timer.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "timer.h"
 
 void test(char * string_scalar, char * string_width_a, char * string_height_a, char * string_width_b, char * string_height_b, char * arq1, char * arq2, char * arq3, char * arq4){
   float scalar = atof(string_scalar);
@@ -45,7 +45,6 @@ void test(char * string_scalar, char * string_width_a, char * string_height_a, c
 
   printf("Time for scalar mult: %.2fms\n", timedifference_msec(start, stop));
   write_matrix(matrix_a, a3);
-
   gettimeofday(&start, NULL);
   matrix_matrix_mult(matrix_a, matrix_b, matrix_c);
   gettimeofday(&stop, NULL);
