@@ -15,8 +15,8 @@ void setup(int width_a, int height_a, int width_b, int height_b, int print){
   b = gen_random_matrix(width_b, height_b);
 
   if(print){
-    print_matrix(a);
-    print_matrix(b);
+    print_matrix(a, 256);
+    print_matrix(b, 256);
   }
 
   write_matrix(a, ma);
@@ -49,10 +49,10 @@ void check_files(int width_a, int height_a, int width_b, int height_b, int print
   read_matrix(result, mr);
 
   if(print){
-  print_matrix(a);
-  print_matrix(b);
-  print_matrix(pre_result);
-  print_matrix(result);
+  print_matrix(a, 256);
+  print_matrix(b, 256);
+  print_matrix(pre_result, 256);
+  print_matrix(result, 256);
   }
 
   fclose(ma);

@@ -14,11 +14,15 @@ int scalar_matrix_mult(float scalar_value, struct matrix *matrix){
   return 0;
 }
 
-void print_matrix(s_matrix * matrix){
-
+void print_matrix(s_matrix * matrix, int elem_num){
+  int counter = 0;
   int size = matrix->width * matrix->height;
   for(int i=0; i < size; i++){
+    if(counter == elem_num){
+      break;
+    }
     printf("%.2f ", matrix->rows[i]);
+    counter++;
     if((i+1) % matrix->width == 0){
       printf("\n");
     }
