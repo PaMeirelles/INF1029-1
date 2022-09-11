@@ -1,0 +1,10 @@
+void setup(int width_a, int height_a, int width_b, int height_b, int print);
+void check_files(int width_a, int height_a, int width_b, int height_b, int print);
+void print_matrix(s_matrix * matrix, int n);
+s_matrix * create_matrix(int width, int height, float * rows);
+int get_cell(int width, int x, int y);
+void fill_matrix(s_matrix * matrix, int num);
+void write_matrix(s_matrix * matrix, FILE * f);
+void read_matrix(s_matrix * matrix, FILE * f);
+s_matrix * gen_random_matrix(int width, int height);
+void free_matrix(s_matrix * matrix);

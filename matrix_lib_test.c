@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "timer.h"
+#include "utility.h"
 
-void test(char * string_scalar, char * string_width_a, char * string_height_a, char * string_width_b, char * string_height_b, char * arq1, char * arq2, char * arq3, char * arq4){
+
+void test(char * string_scalar, char * string_width_a, char * string_height_a, char * string_width_b, char * string_height_b, char * arq1, char * arq2, char * arq3, char * arq4, int (f)(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c)){
   float scalar = atof(string_scalar);
   int width_a = atoi(string_width_a);
   int height_a = atoi(string_height_a);
@@ -47,7 +49,7 @@ void test(char * string_scalar, char * string_width_a, char * string_height_a, c
   write_matrix(matrix_a, a3);
 
   gettimeofday(&start, NULL);
-  classic_matrix_matrix_mult(matrix_a, matrix_b, matrix_c);
+  f(matrix_a, matrix_b, matrix_c);
   gettimeofday(&stop, NULL);
   printf("Time for matrix mult: %.2fms\n", timedifference_msec(start, stop));
 
@@ -62,4 +64,19 @@ void test(char * string_scalar, char * string_width_a, char * string_height_a, c
   fclose(a2);
   fclose(a3);
   fclose(a4);
+}
+
+void comparison(char * string_scalar, char * string_width_a, char * string_height_a, char * string_width_b, char * string_height_b, char * arq1, char * arq2, char * arq3, char * arq4){
+  printf("Classic matrix mult: \n");
+  test(string_scalar, string_width_a, string_height_a, string_width_b, string_height_b, arq1, arq2, arq3, arq4, old_matrix_matrix_mult);
+  printf("Optimized matrix mult: \n");
+  test(string_scalar, string_width_a, string_height_a, string_width_b, string_height_b, arq1, arq2, arq3, arq4, matrix_matrix_mult);
+  
+}
+
+int main(int argc, char * argv[]){
+ //setup(1024, 1024, 1024, 1024, 0);
+ comparison(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9]);
+  //check_files(1024, 1024, 1024, 1024, 8);
+  return 0;
 }
