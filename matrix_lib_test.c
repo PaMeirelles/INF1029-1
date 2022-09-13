@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include "timer.h"
 #include "utility.h"
-
+#include <errno.h>
+#include <immintrin.h>
 
 void test(char * string_scalar, char * string_width_a, char * string_height_a, char * string_width_b, char * string_height_b, char * arq1, char * arq2, char * arq3, char * arq4, int (f)(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c)){
   float scalar = atof(string_scalar);
@@ -19,9 +20,9 @@ void test(char * string_scalar, char * string_width_a, char * string_height_a, c
   FILE * a3 = fopen(arq3, "w");
   FILE * a4 = fopen(arq4, "w");
 
-  s_matrix * matrix_a = malloc(sizeof(s_matrix));
-  s_matrix * matrix_b = malloc(sizeof(s_matrix));
-  s_matrix * matrix_c = malloc(sizeof(s_matrix));
+  s_matrix * matrix_a = aligned_alloc(32, sizeof(s_matrix));
+  s_matrix * matrix_b = aligned_alloc(32, sizeof(s_matrix));
+  s_matrix * matrix_c = aligned_alloc(32, sizeof(s_matrix));
   
   matrix_a->width = width_a;
   matrix_a->height = height_a;
@@ -32,9 +33,9 @@ void test(char * string_scalar, char * string_width_a, char * string_height_a, c
   matrix_c->width = width_b;
   matrix_c->height = height_a;
   
-  matrix_a->rows = malloc(sizeof(float) * width_a * height_a);
-  matrix_b->rows = malloc(sizeof(float) * width_b * height_b);
-  matrix_c->rows = malloc(sizeof(float) * width_a * height_b);
+  matrix_a->rows = aligned_alloc(32, sizeof(float) * width_a * height_a);
+  matrix_b->rows = aligned_alloc(32, sizeof(float) * width_b * height_b);
+  matrix_c->rows =aligned_alloc(32, sizeof(float) * width_a * height_b);
 
   read_matrix(matrix_a, a1);
   read_matrix(matrix_b, a2);
@@ -70,13 +71,15 @@ void comparison(char * string_scalar, char * string_width_a, char * string_heigh
   printf("Classic matrix mult: \n");
   test(string_scalar, string_width_a, string_height_a, string_width_b, string_height_b, arq1, arq2, arq3, arq4, old_matrix_matrix_mult);
   printf("Optimized matrix mult: \n");
+  test(string_scalar, string_width_a, string_height_a, string_width_b, string_height_b, arq1, arq2, arq3, arq4, op_matrix_matrix_mult);
+  printf("Vector matrix mult: \n");
   test(string_scalar, string_width_a, string_height_a, string_width_b, string_height_b, arq1, arq2, arq3, arq4, matrix_matrix_mult);
-  
 }
 
 int main(int argc, char * argv[]){
- //setup(1024, 1024, 1024, 1024, 0);
+ setup(2048, 2048, 2048, 2048, 8);
  comparison(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9]);
-  //check_files(1024, 1024, 1024, 1024, 8);
+  //test(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], op_matrix_matrix_mult);
+  check_files(2048, 2048, 2048, 2048, 8);
   return 0;
 }

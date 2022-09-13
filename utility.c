@@ -4,25 +4,30 @@
 #include <time.h>
 #include "utility.h"
 
+#include <errno.h>
+#include <immintrin.h>
 void setup(int width_a, int height_a, int width_b, int height_b, int print){
+  
   FILE * ma = fopen("matrix_a.dat", "w");
   FILE * mb = fopen("matrix_b.dat", "w");
   
-  s_matrix * a = malloc(sizeof(s_matrix));
+  s_matrix * a = aligned_alloc(32, sizeof(s_matrix));
+  
   a = gen_random_matrix(width_a, height_a);
-  s_matrix * b = malloc(sizeof(s_matrix)); 
+  s_matrix * b = aligned_alloc(32, sizeof(s_matrix)); 
   b = gen_random_matrix(width_b, height_b);
-
+  
   if(print){
     print_matrix(a, print);
     print_matrix(b, print);
   }
-
+  
   write_matrix(a, ma);
   write_matrix(b, mb);
-
+  
   fclose(ma);
   fclose(mb);
+  
 }
 
 void check_files(int width_a, int height_a, int width_b, int height_b, int print){
@@ -31,10 +36,10 @@ void check_files(int width_a, int height_a, int width_b, int height_b, int print
   FILE * mpr = fopen("pre_result.dat", "r");
   FILE * mr = fopen("result.dat", "r");
 
-  float * rows_a = malloc(sizeof(float) * width_a * height_a);
-  float * rows_b = malloc(sizeof(float) * width_b * height_b);
-  float * rows_pre_result = malloc(sizeof(float) * width_a * height_a);
-  float * rows_result = malloc(sizeof(float) * height_a * width_b);
+  float * rows_a = aligned_alloc(32, sizeof(float) * width_a * height_a);
+  float * rows_b =aligned_alloc(32, sizeof(float) * width_b * height_b);
+  float * rows_pre_result =aligned_alloc(32, sizeof(float) * width_a * height_a);
+  float * rows_result = aligned_alloc(32, sizeof(float) * height_a * width_b);
 
 
   s_matrix * a = create_matrix(width_a, height_a, rows_a);
@@ -83,10 +88,10 @@ void print_matrix(s_matrix * matrix, int n){
 }
 
 s_matrix * create_matrix(int width, int height, float * rows){
-  s_matrix * matrix = malloc(sizeof(s_matrix));
+  s_matrix * matrix = aligned_alloc(32, sizeof(s_matrix));
   matrix->width = width;
   matrix->height = height;
-  matrix->rows = malloc(sizeof(float) * width * height);
+  matrix->rows = aligned_alloc(32, sizeof(float) * width * height);
 
   for(int i=0; i < width * height; i++){
     matrix->rows[i] = rows[i];
@@ -123,12 +128,16 @@ void read_matrix(s_matrix * matrix, FILE * f){
 }
 
 s_matrix * gen_random_matrix(int width, int height){
-  int size = width * height;
-  float rows[size];
-  for(int i=0; i < size; i++){
+  long size = width * height;
+  
+  float * rows = malloc(sizeof(float) * size);
+  
+  for(long i=0; i < size; i++){
     rows[i] = rand() % 10;
   }
+  
   s_matrix * matrix = create_matrix(width, height, rows);
-
+  free(rows);
   return matrix;
+  
 }
