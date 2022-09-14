@@ -6,7 +6,7 @@
 #include <errno.h>
 #include <immintrin.h>
 
-int scalar_matrix_mult(float scalar_value, struct matrix *matrix){
+int old_scalar_matrix_mult(float scalar_value, struct matrix *matrix){
   if(matrix == NULL){
     return 1;
   }
@@ -94,4 +94,18 @@ int matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct
   }
  }
     return 1;
+}
+int scalar_matrix_mult(float scalar_value, struct matrix *matrix){
+  if(matrix == NULL){
+    return 1;
+  }
+  __m256 a = _mm256_set1_ps(scalar_value);
+  __m256 b;
+  int size = matrix->width * matrix->height;
+  for(int i=0; i < size; i += 8){
+    b = _mm256_load_ps(matrix->rows+i));
+    b = _mm256_mul_ps(a, b);
+    _mm256_store_ps(matrix->rows+i, b);
+  }
+  return 0;
 }

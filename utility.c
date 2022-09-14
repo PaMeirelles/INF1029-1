@@ -130,7 +130,7 @@ void read_matrix(s_matrix * matrix, FILE * f){
 s_matrix * gen_random_matrix(int width, int height){
   long size = width * height;
   
-  float * rows = malloc(sizeof(float) * size);
+  float * rows = aligned_alloc(32, sizeof(float) * size);
   
   for(long i=0; i < size; i++){
     rows[i] = rand() % 10;

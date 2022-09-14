@@ -4,6 +4,7 @@ unsigned long int height;
 unsigned long int width;
 float *rows;
 } typedef s_matrix;
+int old_scalar_matrix_mult(float scalar_value, struct matrix *matrix);
 int scalar_matrix_mult(float scalar_value, struct matrix *matrix);
 int op_matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c);
 int old_matrix_matrix_mult(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c);
