@@ -29,7 +29,6 @@ void setup(int width_a, int height_a, int width_b, int height_b, int print){
   fclose(mb);
   
 }
-
 void check_files(int width_a, int height_a, int width_b, int height_b, int print){
   FILE * ma = fopen("matrix_a.dat", "r");
   FILE * mb = fopen("matrix_b.dat", "r");
@@ -68,7 +67,6 @@ void check_files(int width_a, int height_a, int width_b, int height_b, int print
   fclose(mpr);
   fclose(mr);
 }
-
 void print_matrix(s_matrix * matrix, int n){
 
   int size = matrix->width * matrix->height;
@@ -86,7 +84,6 @@ void print_matrix(s_matrix * matrix, int n){
   printf("\n");
 
 }
-
 s_matrix * create_matrix(int width, int height, float * rows){
   s_matrix * matrix = aligned_alloc(32, sizeof(s_matrix));
   matrix->width = width;
@@ -98,7 +95,6 @@ s_matrix * create_matrix(int width, int height, float * rows){
   }
   return matrix;
 }
-
 void free_matrix(s_matrix * matrix){
   free(matrix->rows);
   free(matrix);
@@ -115,7 +111,6 @@ void write_matrix(s_matrix * matrix, FILE * f){
   int size = matrix-> width * matrix->height;
   fwrite(matrix->rows, sizeof(float), size, f);
 }
-
 void read_matrix(s_matrix * matrix, FILE * f){
   
   int size = matrix-> width * matrix->height;
@@ -126,7 +121,6 @@ void read_matrix(s_matrix * matrix, FILE * f){
      printf("Falha na leitura. Apenas %d elementos lidos, %d esperados\n", s, size);
    }
 }
-
 s_matrix * gen_random_matrix(int width, int height){
   long size = width * height;
   

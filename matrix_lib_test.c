@@ -67,9 +67,11 @@ void test(char * string_scalar, char * string_width_a, char * string_height_a, c
   gettimeofday(&start, NULL);
   f(matrix_a, matrix_b, matrix_c);
   gettimeofday(&stop, NULL);
-  printf("Time for matrix mult: %.2fms\n", timedifference_msec(start, stop));
+  printf("Time for matrix mult: %.2fms\n", 
+  timedifference_msec(start, stop));
 
-
+  print_matrix(matrix_c, 8);
+  
   write_matrix(matrix_c, a4);
 
   free_matrix(matrix_a);
@@ -92,9 +94,9 @@ void comparison(char * string_scalar, char * string_width_a, char * string_heigh
 }
 
 int main(int argc, char * argv[]){
- setup(2048, 2048, 2048, 2048, 8);
+ //setup(2048, 2048, 2048, 2048, 8);
  //comparison(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9]);
   test(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], matrix_matrix_mult);
-  check_files(2048, 2048, 2048, 2048, 8);
+  //check_files(2048, 2048, 2048, 2048, 8);
   return 0;
 }
