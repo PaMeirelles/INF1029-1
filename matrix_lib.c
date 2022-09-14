@@ -103,7 +103,7 @@ int scalar_matrix_mult(float scalar_value, struct matrix *matrix){
   __m256 b;
   int size = matrix->width * matrix->height;
   for(int i=0; i < size; i += 8){
-    b = _mm256_load_ps(matrix->rows+i));
+    b = _mm256_load_ps(matrix->rows+i);
     b = _mm256_mul_ps(a, b);
     _mm256_store_ps(matrix->rows+i, b);
   }

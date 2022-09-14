@@ -6,12 +6,26 @@
 #include <errno.h>
 #include <immintrin.h>
 
+int is_valid(int num){
+    if (num%8==0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
 void test(char * string_scalar, char * string_width_a, char * string_height_a, char * string_width_b, char * string_height_b, char * arq1, char * arq2, char * arq3, char * arq4, int (f)(struct matrix *matrix_a, struct matrix * matrix_b, struct matrix * matrix_c)){
   float scalar = atof(string_scalar);
   int width_a = atoi(string_width_a);
   int height_a = atoi(string_height_a);
   int width_b = atoi(string_width_b);
   int height_b = atoi(string_height_b);
+
+  if(!(is_valid(width_a) && is_valid(width_b) && is_valid(height_a) && is_valid(height_b))){
+    printf("Dimensão não é múltiplo de 8\n");
+    exit(1);
+  }
   
   struct timeval start, stop;
 
@@ -79,8 +93,8 @@ void comparison(char * string_scalar, char * string_width_a, char * string_heigh
 
 int main(int argc, char * argv[]){
  setup(2048, 2048, 2048, 2048, 8);
- comparison(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9]);
-  //test(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], op_matrix_matrix_mult);
+ //comparison(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9]);
+  test(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], matrix_matrix_mult);
   check_files(2048, 2048, 2048, 2048, 8);
   return 0;
 }
